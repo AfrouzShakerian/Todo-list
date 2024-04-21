@@ -1,0 +1,54 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#todo-list {
+    background-color: #f2f2f2;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Optional: Add a box shadow for depth */
+    max-width: 400px; /* Optional: Set a maximum width */
+    width: 90%; /* Optional: Set a relative width */
+}
+
+.remove-item {
+    float: right;
+    cursor: pointer;
+    margin-left: 5px;
+    background: #142435;
+    border-radius: 5px;
+    border: none;
+    font-size: 0.7em;
+    color: #fff;
+}
+
+.remove-item:hover {
+    background-color: hsl(216, 62%, 66%);
+    color: #142435;
+}
+
+.btn:focus {
+    background-color: hsl(210, 32%, 40%);
+    color:#fff;
+    outline: auto;
+}
+
+/* Custom button style */
+.btn-custom {
+    background-color: #007bff; /* Change the background color */
+    color: #fff; /* Change the text color */
+    border-color: #007bff; /* Change the border color */
+}
+
+/* Hover effect for the custom button */
+.btn-custom:hover {
+    background-color: #6b99c9; /* Darker shade of the background color */
+    border-color: #0056b3; /* Darker shade of the border color */
+}
+
+.todo-checkbox {
+    margin-right: 5px;
+}

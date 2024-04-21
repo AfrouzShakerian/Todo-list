@@ -11,22 +11,33 @@
         <div class="container">
             <div id="todo-list">
                 <h2>Todo list</h2>
-                <input type="text" placeholder="add an item" id="todo-input">
-                
-                <button onclick="addItem()" type="button" class="btn btn-primary"
-                        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
-                    Add
-                </button>
 
+                <div class="input-group mb-3">
+                    <input type="text" id="todo-input" class="form-control" placeholder="Add a new item" aria-label="Add a new item" aria-describedby="button-addon2">
+                    <button onclick="addItem()" class="btn btn-custom" type="button" id="button-addon2" tabindex="0">Add</button>
+                </div>
                 
-                <ul id="todo-items">
+                <ol id="todo-items">
                     <!-- Todo items will be added here -->
-                    <li>This is an example<button onclick="removeItem(this)">remove</button></li>
-                </ul>
+                    <li>
+                        <input type="checkbox" class="todo-checkbox" onchange="toggleDone(this)">This is an example!
+                        <button class="remove-item" onclick="removeItem(this)" aria-label="Remove item">&times;</button>
+                        
+                    </li>
+                </ol>
             </div>
         </div>
 
         <script>
+
+            // Add event listener for keydown event on the list
+            document.getElementById("todo-items").addEventListener("keydown", function(event){
+                if (event.keyCode === 13 && event.target.matches("input[type='checkbox']")){
+                    event.preventDefault();
+                    event.target.click();
+                }
+            });
+
             function addItem(){
 
                 // Retrieve input value
@@ -40,11 +51,25 @@
 
                 // Create a new list item
                 var li = document.createElement("li");
+
+                // Create a checkbox
+                var checkbox = document.createElement("input");
+                checkbox.type = "checkbox";
+                checkbox.className = "todo-checkbox";
+                checkbox.onchange = function(){
+                    toggleDone(this);
+                };
+
+                // Append checkbox to the list item
+                li.appendChild(checkbox);
+
+                // Add text for the todo item
                 li.appendChild(document.createTextNode(newItemText));
 
                 // Create a remove button
                 var removeButton = document.createElement("button");
-                removeButton.appendChild(document.createTextNode("remove"));
+                removeButton.className = "remove-item";
+                removeButton.innerHTML = "&times;";
                 removeButton.onclick = function(){
                     removeItem(this);
                 };
@@ -70,6 +95,16 @@
                 
                 // Remove the <li> element from the list
                 li.parentNode.removeChild(li);
+            }
+
+            function toggleDone(checkbox){
+                var listItem = checkbox.parentNode;
+                
+                if(checkbox.checked){
+                    listItem.style.textDecoration = "line-through";
+                } else {
+                    listItem.style.textDecoration = "none";
+                }
             }
 
             // Add event listener for keypress event on the input field
