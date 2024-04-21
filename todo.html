@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="styles.css">
+        <title>Todo List</title>
+    </head>
+    <body>
+        <div class="container">
+            <div id="todo-list">
+                <h2>Todo list</h2>
+                <input type="text" placeholder="add an item" id="todo-input">
+                
+                <button onclick="addItem()" type="button" class="btn btn-primary"
+                        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
+                    Add
+                </button>
+
+                
+                <ul id="todo-items">
+                    <!-- Todo items will be added here -->
+                    <li>This is an example<button onclick="removeItem(this)">remove</button></li>
+                </ul>
+            </div>
+        </div>
+
+        <script>
+            function addItem(){
+
+                // Retrieve input value
+                var newItemText = document.getElementById("todo-input").value;
+
+                // Ensure the input is not empty
+                if(newItemText.trim() === ""){
+                    alert("Please enter a todo item.");
+                    return;
+                }
+
+                // Create a new list item
+                var li = document.createElement("li");
+                li.appendChild(document.createTextNode(newItemText));
+
+                // Create a remove button
+                var removeButton = document.createElement("button");
+                removeButton.appendChild(document.createTextNode("remove"));
+                removeButton.onclick = function(){
+                    removeItem(this);
+                };
+
+                // Append the remove button to the list item
+                li.appendChild(removeButton);
+
+                // Get the reference node (the first child of the list)
+                var referenceNode = document.getElementById("todo-items").firstChild;
+
+                // Insert the new list item before the reference node
+                document.getElementById("todo-items").insertBefore(li, referenceNode);
+
+                // Clear the input field
+                document.getElementById("todo-input").value = "";
+
+            }
+
+            function removeItem(button){
+                
+                // Get the parent of the button (the <li> element)
+                var li = button.parentNode;
+                
+                // Remove the <li> element from the list
+                li.parentNode.removeChild(li);
+            }
+
+            // Add event listener for keypress event on the input field
+            document.getElementById("todo-input").addEventListener("keypress", function(event){
+
+                // Check if the pressed key is Enter (key code 13)
+                if(event.keyCode === 13){
+                    // Prevent the default action (from submission)
+                    event.preventDefault();
+                    // Call the addItem() function to add the item to the list
+                    addItem();
+                }
+            });
+
+        </script>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    </body>    
+</html>
